@@ -2,8 +2,10 @@ import os
 from dotenv import load_dotenv
 from pymongo import MongoClient
 
-from flask import render_template
+from flask import render_template, request, jsonify
 from . import routes
+
+import hashlib
 
 load_dotenv()
 mySecretKey = os.environ.get('MySecretKey')
@@ -21,7 +23,7 @@ def api_login():
 
     pw_hash = hashlib.sha256(pw_receive.encode('utf-8')).hexdigest() # 암호화??
 
-    result = db.user.find_one({'id': id_receive, 'pw': pw_hash})
+    result = db.member.find_one({'id': id_receive, 'pw': pw_hash})
 
     if result is not None:
         payload = {
@@ -33,4 +35,5 @@ def api_login():
         return jsonify({'result': 'success', 'token': token})
     else:
         return jsonify({'result': 'fail', 'msg': '아이디/비밀번호가 일치하지 않습니다.'})
+
 

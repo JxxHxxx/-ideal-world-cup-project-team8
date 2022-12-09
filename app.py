@@ -7,14 +7,6 @@ import certifi
 
 ca=certifi.where()
 
-SECRET_KEY = 'SPARTA'
-
-import jwt
-
-import datetime
-
-import hashlib
-
 app = Flask(__name__)
 app.register_blueprint(routes)
 
