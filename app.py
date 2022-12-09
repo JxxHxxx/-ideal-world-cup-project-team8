@@ -3,8 +3,17 @@ from pymongo import MongoClient
 
 from controller import routes
 
-client = MongoClient('mongodb+srv://test:1gPwls4189@cluster0.jhc3fyv.mongodb.net/Cluster0?retryWrites=true&w=majority')
-db = client.worldcup
+import certifi
+
+ca=certifi.where()
+
+SECRET_KEY = 'SPARTA'
+
+import jwt
+
+import datetime
+
+import hashlib
 
 app = Flask(__name__)
 app.register_blueprint(routes)
