@@ -18,6 +18,7 @@ def select():
 @routes.route('/api/noodle/read', methods=['GET'])
 def read_noddle():
     noodle_list = list(db.noodle.find({}, {"_id": False}))
+    noodle_list = sorted(noodle_list, key=lambda noodle_list: noodle_list['win'], reverse=True)
 
     return jsonify({'ideal': noodle_list})
 
