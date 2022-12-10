@@ -18,6 +18,10 @@
 
 
         <script>
+            {% if msg %}
+                alert("{{ msg }}")
+            {% endif %}
+
             function login() {
                 $.ajax({
                     type: "POST",
@@ -57,7 +61,6 @@
                 <div>
                     <label class="label" for="userid">ID</label>
                     <input type="text" id="userid" placeholder="My ID">
-
                 </div>
                 <div>
                     <div>

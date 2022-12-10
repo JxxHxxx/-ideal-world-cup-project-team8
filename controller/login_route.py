@@ -6,11 +6,16 @@ from flask import render_template, request, jsonify
 from . import routes
 
 import hashlib
+import datetime
+import jwt
+
+SECRET_KEY = 'SPARTA'
 
 load_dotenv()
 mySecretKey = os.environ.get('MySecretKey')
 client = MongoClient(mySecretKey)
 db = client.worldcup
+
 
 @routes.route('/login', methods=['GET'])
 def login():
@@ -23,12 +28,11 @@ def api_login():
 
     pw_hash = hashlib.sha256(pw_receive.encode('utf-8')).hexdigest() # 암호화??
 
-    result = db.member.find_one({'id': id_receive, 'pw': pw_hash})
+    result = db.member.find_one({'id': id_receive, 'password': pw_hash})
 
     if result is not None:
         payload = {
             'id': id_receive,
-            'exp': datetime.datetime.utcnow() + datetime.timedelta(seconds=5)
         }
         token = jwt.encode(payload, SECRET_KEY, algorithm='HS256')
 
