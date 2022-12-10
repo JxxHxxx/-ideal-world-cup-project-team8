@@ -19,12 +19,13 @@
 <script>
 
     $(document).ready(function () {
-
+        add_noodle()
+        get_nickname()
     });
 </script>
 <body>
     <center>
-        <h1>어떤 라면 좋아해?</h1>
+        <h1>{{nickname}}은 어떤 라면 좋아해?</h1>
         <img id="first_image" onclick="change(0)" src="https://img.freepik.com/premium-photo/horizontal-blank-empty-white-background-backdrop_199726-169.jpg?w=1380">
         <img id="second_image" onclick="change(1)" src="https://img.freepik.com/premium-photo/horizontal-blank-empty-white-background-backdrop_199726-169.jpg?w=1380">
     </center>

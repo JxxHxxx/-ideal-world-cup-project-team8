@@ -10,6 +10,19 @@ let next_round_images_index = 0;
 
 let total_matches = 0;
 
+function get_nickname() {
+    $.ajax({
+        type: 'GET',
+        url: 'api/cookies',
+        data:{},
+        success: function (response) {
+            if (response == null) {
+                alert(response['msg'])
+            }
+        }
+    })
+
+}
 
 function read_result() {
     $.ajax({
