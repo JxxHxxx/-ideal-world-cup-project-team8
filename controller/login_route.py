@@ -10,7 +10,7 @@ import datetime
 import jwt
 
 SECRET_KEY = 'SPARTA'
-
+#adadas
 load_dotenv()
 mySecretKey = os.environ.get('MySecretKey')
 client = MongoClient(mySecretKey)
@@ -40,4 +40,5 @@ def api_login():
     else:
         return jsonify({'result': 'fail', 'msg': '아이디/비밀번호가 일치하지 않습니다.'})
 
+    # window.addEventListener('unload', e= > document.querySelector('.unload').innerHTML = '브라우저 종료 이벤트 발생!');
 
