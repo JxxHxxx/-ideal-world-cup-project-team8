@@ -10,10 +10,31 @@ let next_round_images_index = 0;
 
 let final = 0;
 
+function read_result() {
+    $.ajax({
+        type: 'GET',
+        url: '/api/noodle/read',
+        data:{},
+        success: function (response) {
+            ideal_list = response['ideal']
+            console.log(ideal_list)
+            for (let i = 0; i < ideal_list.length; i++) {
+
+                let result_html = `<tr>
+                                      <td>${ideal_list[i]['name']}</td>     
+                                      <td>${ideal_list[i]['win']}</td>     
+                                    </tr>`
+
+                $('#result-box').append(result_html)
+            }
+        }
+    })
+}
+
 function add_noodle() {
     $.ajax({
        type: 'GET',
-       url: '/api/select',
+       url: '/api/noodle/read',
        data: {},
        success: function (response) {
            ideal_list = response['ideal']
@@ -61,9 +82,6 @@ function change(idx) {
                 candidate_images[i] = next_round_images[i]
             }
 
-            // console.log("next_round_images.length= " + next_round_images.length)
-            // console.log("candidate_images.length= " + candidate_images.length)
-
             if (next_round_images.length != 1) {
                 next_round_images = []
                 candidate_images_index = 0
@@ -74,8 +92,23 @@ function change(idx) {
             } else {
                 document.getElementById("first_image").src = next_round_images[0]
                 //최종 결과는 한장으로 나오게
+
+                // let result_html = `<button onclick="send_result()">결과 보기</button>`
+                let result_html = `<button onclick="location.href='select/result'; save_result()">결과 보기</button>`
+                $('#result').append(result_html)
+
             }
         }
     }
 }
 
+function save_result() {
+    let result_img = next_round_images[0]
+    $.ajax ({
+        type: 'POST',
+        url: "/api/noodle/save",
+        data:{img_give:result_img},
+        success : function (response) {
+        }
+    })
+}
