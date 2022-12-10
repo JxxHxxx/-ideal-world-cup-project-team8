@@ -1,9 +1,15 @@
+import os
+
+from dotenv import load_dotenv
 from flask import Flask
 from pymongo import MongoClient
 
 from controller import routes
 
-client = MongoClient('mongodb+srv://test:1gPwls4189@cluster0.jhc3fyv.mongodb.net/Cluster0?retryWrites=true&w=majority')
+load_dotenv()
+
+mySecretKey = os.environ.get('MySecretKey')
+client = MongoClient(mySecretKey)
 db = client.worldcup
 
 app = Flask(__name__)

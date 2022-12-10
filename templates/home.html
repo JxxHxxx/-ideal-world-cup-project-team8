@@ -3,10 +3,255 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+
+    <!-- bootstrap4 -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+
+    <!-- jquery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <!-- cookie -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
+
 </head>
+
+<style>
+    * {
+        margin:0;
+        padding:0;
+        font-family: 'TmoneyRoundWindExtraBold';
+    }
+
+    @font-face {
+        font-family: 'TmoneyRoundWindExtraBold';
+        src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-07@1.0/TmoneyRoundWindExtraBold.woff') format('woff');
+        font-weight: normal;
+        font-style: normal;
+    }
+
+    .backImage {
+        width:100vw;
+        height:100vh;
+        background-image:url('../static/src/라면배경.gif');
+        background-size:cover;
+    }
+
+    .login_textMain {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate( -50%, -50% );
+        text-align:center;
+    }
+
+    .not_login_textMain {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate( -50%, -50% );
+    }
+
+    .inner-cont {
+        margin: auto;
+        overflow: hidden;
+        width: 500px;
+        height: 500px;
+        background-color: #FFF;
+        text-align: center;
+        border: 1px solid #C2C7D0;
+    }
+    .inner-cont .sign {
+        overflow: hidden;
+    }
+    .login_title {
+        color:#FF0000;
+        font-size:50px;
+    }
+    .inner-cont .sign span {
+        float: left;
+        width: 100%;
+        display: block;
+        padding: 8px 0;
+        font-size: 22px;
+        font-weight: bold;
+        cursor: pointer;
+        background-color: #EEE;
+        color: #919191;
+    }
+    .inner-cont .sign span.active {
+        border-top: 2px solid #1f9a50;
+        background-color: #FFF;
+    }
+    .inner-cont .sign-in-up {
+        padding: 25px;
+        background-color: #FFF;
+    }
+    .inner-cont .sign-in-up form {
+        overflow: hidden;
+        display: none;
+    }
+    .inner-cont .sign-in-up form > a {
+        float: left;
+        width: 50%;
+        font-size: 12px;
+    }
+    .inner-cont .sign-in-up form > span {
+        text-align: left;
+    }
+    .inner-cont .sign-in-up form > a {
+        text-align: right;
+        text-decoration: none;
+        color: #1f9a50;
+    }
+    .inner-cont .sign-in-up form > a:hover {
+        text-decoration: underline;
+    }
+    .inner-cont .sign-in-up form input:not([type="checkbox"]) {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 10px;
+        border: 1px solid #C2C7D0;
+        border-radius: 5px;
+        box-sizing: border-box
+    }
+    .inner-cont .sign-in-up form input[type="submit"]{
+        margin-top: 10px;
+        background-color: #1f9a50;
+        color: #FFF;
+        font-size: 18px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: .3s
+    }
+    .inner-cont .sign-in-up form input[type="button"]{
+        margin-top: 10px;
+        border: 1px solid red;
+        color: #FF0000;
+        font-size: 18px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: .3s
+    }
+    .inner-cont .sign-in-up .help-text{
+        font-size:15px;
+        color:#FF0000;
+    }
+
+    .inner-cont .sign-in-up form.active {
+        display: block;
+    }
+    .inner-cont .divider {
+        position: relative;
+        margin-bottom: 15px;
+    }
+    .inner-cont .divider::after{
+        content: "";
+        height: 1px;
+        width: 100%;
+        background-color: #C2C7D0;
+        position: absolute;
+        top: 9px;
+        left: 0;
+    }
+    .inner-cont .divider span {
+        padding: 0 10px;
+        background-color: #FFF;
+        z-index: 2;
+        position: relative;
+    }
+
+
+</style>
+
+<script>
+       $(document).ready(function () {
+            getCookie()
+       });
+
+      function getCookie() {
+        var result = null;
+        var cookie = document.cookie.split('=');
+
+        if (cookie[0] == 'mytoken') {
+            console.log("토큰이 있습니다");
+            console.log(cookie);
+
+            let login_html = `<div class="login_textMain">
+                                <span style="font-size:100px;">라면 월드컵</span><br>
+                                <a href='/select'>
+                                    <button type="button" class="btn btn-success btn" style="font-size:30px;">
+                                        &nbsp;&nbsp;PLAY&nbsp;&nbsp;
+                                    </button><br>
+                                </a>
+                                <button style="background:#FF0000; color:#FFFFFF;" onclick="logout()">&nbsp;&nbsp;로그아웃&nbsp;&nbsp;</button>
+                              </div>`
+
+            $('#login').append(login_html);
+        } else {
+            console.log("토큰이 없습니다");
+            console.log(cookie);
+
+            let not_login_html = `<div class="not_login_textMain">
+                                        <div class="global-cont">
+                                          <div class="inner-cont">
+                                            <div class="sign">
+                                                <span class="active sign-in"></span>
+                                            </div>
+                                            <div class="login_title">라면 월드컵</div>
+                                            <div class="sign-in-up">
+                                              <label class="label" for="userid" style="display:none;">ID</label>
+                                              <label class="label" for="userpw" style="display:none;">PW</label>
+                                              <form class="sign-in-form active">
+                                                  <input type="text" id="userid" placeholder="아이디">
+                                                  <input type="password" id="userpw" placeholder="비밀번호">
+                                                  <input type="submit" value="로그인" onclick="login()">
+                                              </form>
+                                              <div class="divider"></div>
+                                              <div class="help-text"></div>
+                                              <form class="sign-in-form active">
+                                                 <input type="button" value="회원가입">
+                                              </form>
+                                            </div>
+                                          </div>
+                                        </div>
+                                    </div>`
+
+            $('#not_login').append(not_login_html);
+        }
+        console.log(typeof(cookie));
+
+      }
+
+      function login() {
+            alert("로그인 실행");
+            $.ajax({
+                type: "POST",
+                url: "/api/login",
+                data: {id_give: $('#userid').val(), pw_give: $('#userpw').val()},
+                success: function (response) {
+                    if (response['result'] == 'success') {
+                        $.cookie('mytoken', response['token']);
+
+                        alert('로그인 완료!');
+                        window.location.href='/';
+                    } else {
+                        alert(response['msg'])
+                    }
+                }
+            })
+      }
+
+      function logout(){
+            $.removeCookie('mytoken');
+            alert('로그아웃!');
+            window.location.href='/';
+      }
+</script>
+
 <body>
-  홈화면입니다.__init__.py
-login_route.py
-sign_route.py
+    <div class="backImage"></div>
+
+    <div id="login"></div>
+    <div id="not_login"></div>
 </body>
 </html>
