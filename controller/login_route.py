@@ -28,7 +28,7 @@ def api_login():
 
     pw_hash = hashlib.sha256(pw_receive.encode('utf-8')).hexdigest() # 암호화??
 
-    result = db.member.find_one({'id': id_receive, 'password': pw_hash})
+    result = db.member.find_one({'id': id_receive, 'pw': pw_hash})
 
     if result is not None:
         payload = {
