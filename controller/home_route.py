@@ -1,10 +1,9 @@
-import hashlib
 import os
 
 import jwt
 from dotenv import load_dotenv
 
-from flask import render_template, request, redirect, url_for, jsonify
+from flask import render_template, request, redirect, url_for,  jsonify
 from . import routes
 
 from pymongo import MongoClient
@@ -37,6 +36,5 @@ def home_accept():
         return render_template('home.html', nickname=user_info["nickname"])
     except:
         return redirect(url_for('routes.home'))
-
 
 
