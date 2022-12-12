@@ -28,7 +28,7 @@ function read_result() {
                                       <td>${i+1}등</td>  
                                       <td><img src="${noodle_img}" width=100 height=100></td>
                                       <td>${noodle_name}</td> 
-                                      <td><a onclick="location.href='/select/detail/${noodle_name}'")" >${noodle_win}</a></td>     
+                                      <td><a onclick="location.href='/play/result/${noodle_name}'")" >${noodle_win}</a></td>     
                                     </tr>`
                 $('#result-box').append(result_html)
             }
@@ -117,7 +117,7 @@ function change(idx) {
             } else {
                 document.getElementById("first_image").src = next_round_images[0]
                 document.getElementById("second_image").style.display ='none';
-                let result_html = `<button class="btn btn-success" onclick="location.href='select/result'; save_result()">결과 보기</button>`
+                let result_html = `<button class="btn btn-success" onclick="location.href='play/results'; save_result()">결과 보기</button>`
                 $('#result').append(result_html)
 
             }

@@ -47,7 +47,7 @@ def save_result():
     db.noodle.update_one({'img': img_receive}, {'$push':{'nicknames': login_member['nickname']}})
     return "ok"
 
-@routes.route('/select/result', methods=['GET'])
+@routes.route('/play/results', methods=['GET'])
 def result():
     token = request.cookies.get('mytoken')
     try:
@@ -73,7 +73,7 @@ def select():
     except jwt.exceptions.DecodeError:
         return redirect(url_for("routes.home", msg="로그인 정보가 존재하지 않습니다."))
 
-@routes.route('/select/detail/<noodle_name>', methods=['GET'])
+@routes.route('/play/result/<noodle_name>', methods=['GET'])
 def detail(noodle_name):
     find_noodle = db.noodle.find_one({'name': noodle_name})
 
