@@ -48,4 +48,5 @@ def save_result():
     find_noodle = db.noodle.find_one({'img': img_receive})
 
     db.noodle.update_one({'img': img_receive}, {'$set': {'win': find_noodle['win'] + 1}})
+    db.noodle.update_one({'img': img_receive}, {'$push':{'nicknames': login_member['nickname']}})
     return "ok"
