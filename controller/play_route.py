@@ -81,7 +81,7 @@ def detail(noodle_name):
     try:
         payload = jwt.decode(token, SECRET_KEY, algorithms=['HS256'])
         db.member.find_one({'id': payload['id']})
-        return render_template('detail.html', nickname_list=find_noodle['nicknames'])
+        return render_template('detail.html', nickname_list=find_noodle['nicknames'], noodle_name = noodle_name)
     except jwt.ExpiredSignatureError:
         return redirect(url_for("routes.home", msg="로그인 시간이 만료되었습니다."))
 
