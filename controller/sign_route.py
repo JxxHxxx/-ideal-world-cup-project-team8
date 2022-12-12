@@ -1,18 +1,15 @@
+import hashlib
 import os
+import re
 
-import js as js
 from dotenv import load_dotenv
+
 from flask import render_template, request, jsonify
 from pymongo import MongoClient
 
-import jwt
-import hashlib
-import datetime
-
-SECRET_KEY = 'SPARTA'
-
 from . import routes
 
+SECRET_KEY = 'SPARTA'
 
 load_dotenv()
 mySecretKey = os.environ.get('MySecretKey')
@@ -20,55 +17,72 @@ client = MongoClient(mySecretKey)
 db = client.worldcup
 
 @routes.route('/sign', methods=['GET'])
-def members():
+def sign_get():
+    all_members = list(db.member.find({}, {'_id': False}))
+    print("----------------")
+    print(all_members)
+    print("----------------")
     return render_template('/sign_register.html')
 
-
-@routes.route("/members", methods=["POST"])
-def members_post():
+@routes.route('/api/sign', methods=['POST'])
+def api_sign():
     id_receive = request.form['id_give']
     pw_receive = request.form['pw_give']
-    nickname_receive = request.form['nickname_give']
+    pw_re_receive = request.form['pw_re_give']
+    nick_receive = request.form['nick_give']
 
-    doc = {
-        'id': id_receive,
-        'pw': pw_receive,
-        'nickname': nickname_receive
-    }
+    if not pw_receive == pw_re_receive:
+        result = 'fail_re'
+        return jsonify({'result': result})
 
-    db.member.insert_one(doc)
+    reg = r'^[A-Za-z\d!@#$%^&*?]{8,20}$'
 
-    return jsonify({'msg': '주문 완료!'})
-
-@routes.route("/members", methods=["GET"])
-def members_get():
-    orders_list = list(db.orders.find({},{'_id':False}))
-    return jsonify({'orders':orders_list})
+    if not re.search(reg, pw_receive):
+        result = 'fail_reg'
+        return jsonify({'result': result})
 
 
-@routes.route('/login', methods=['POST'])
-def api_login():
+    pw_hash = hashlib.sha256(pw_receive.encode('utf-8')).hexdigest() # 암호화??
+
+    db.member.insert_one({'id': id_receive, 'pw': pw_hash, 'nick': nick_receive})
+
+    return jsonify({'result': 'success'})
+
+@routes.route('/api/id_check', methods=['POST'])
+def api_id_check():
     id_receive = request.form['id_give']
-    pw_receive = request.form['pw_give']
 
-    pw_hash = hashlib.sha256(pw_receive.encode('utf-8')).hexdigest()
+    reg = r'^[A-Za-z0-9_]{4,15}$'
 
-    result = db.user.find_one({'id': id_receive, 'pw': pw_hash})
+    if not re.search(reg, id_receive):
+        result = 'fail_reg'
+        return jsonify({'result': result})
 
-
-    if result is not None:
-
-        payload = {
-            'id': id_receive,
-            'exp': datetime.datetime.utcnow() + datetime.timedelta(seconds=5)
-        }
-        token = jwt.encode(payload, SECRET_KEY, algorithm='HS256')
-
-
-        return jsonify({'result': 'success', 'token': token})
-
+    member_check = db.member.find_one({'id': id_receive})
+    print(member_check)
+    print(type(member_check))
+    if member_check == None:
+        result = 'success'
     else:
-        return jsonify({'result': 'fail', 'msg': '아이디/비밀번호가 일치하지 않습니다.'})
+        result = 'fail_re'
+    return jsonify({'result': result})
 
-    if __name__ == '__main__':
-        app.run('0.0.0.0', port=5000, debug=True)
+@routes.route('/api/nick_check', methods=['POST'])
+def api_nick_check():
+    nick_receive = request.form['nick_give']
+
+    nick_data = nick_receive
+    reg = r'^[A-Za-zㄱ-ㅣ가-힣0-9]{2,10}$'
+
+    if not re.search(reg, nick_data):
+        result = 'fail_reg'
+        return jsonify({'result': result})
+
+    member_check = db.member.find_one({'nickname': nick_receive})
+    print(member_check)
+    print(type(member_check))
+    if member_check == None:
+        result = 'success'
+    else:
+        result = 'fail_re'
+    return jsonify({'result': result})
