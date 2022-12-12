@@ -77,7 +77,7 @@
     .inner-cont .sign-in-up {
         padding: 25px;
     }
-    .inner-cont .sign-in-up form input:not([type="button"],[type="password"]) {
+    .inner-cont .sign-in-up form input:not([type="button"],[type="password"],[type="email"]) {
         width: 75%;
         padding: 10px;
         margin-bottom: 10px;
@@ -95,6 +95,14 @@
         cursor: pointer;
     }
     .inner-cont .sign-in-up form input[type="password"]{
+        width: 95%;
+        padding: 10px;
+        margin-bottom: 10px;
+        border: 1px solid #C2C7D0;
+        border-radius: 5px;
+        box-sizing: border-box
+    }
+    .inner-cont .sign-in-up form input[type="email"]{
         width: 95%;
         padding: 10px;
         margin-bottom: 10px;
@@ -131,6 +139,7 @@
                 <div class="sign-in-up">
                   <label class="label" for="userid" style="display:none;">ID</label>
                   <label class="label" for="usernick" style="display:none;">닉네임</label>
+                    <label class="label" for="useremail" style="display:none;">email</label>
                   <label class="label" for="userpw" style="display:none;">PW</label>
                   <label class="label" for="userpw_re" style="display:none;">PW_re</label>
                   <form class="sign-in-form active">
@@ -147,6 +156,13 @@
                       <br>
                       <span id="nick_check" style="font-size:12px;">
                           닉네임은 2-10자의 한글과 영문과 숫자만 입력 가능합니다.
+                      </span>
+
+                      <p></p>
+                      <input type="email" id="useremail" placeholder="이메일">
+                      <br>
+                      <span id="email_check" style="font-size:12px;">
+                          이메일 형식에 맞춰서 이메일을 설정해주세요.
                       </span>
 
                       <p></p>
@@ -184,6 +200,7 @@
                 pw_give: $('#userpw').val(),
                 pw_re_give: $('#userpw_re').val(),
                 nick_give: $('#usernick').val()
+                email_give: $('#useremail').val()
             },
             success: function (response) {
                 if (response['result'] == 'fail_reg') {
@@ -268,11 +285,30 @@
             $('#nick_check').empty();
             $('#nick_check').append(check_html);
         } else {
-            let check_html = `<span id="id_check" style="font-size:12px;">
+            let check_html = `<span id="nick_check" style="font-size:12px;">
                                   닉네임은 2-10자의 한글과 영문과 숫자만 입력 가능합니다.
                               </span>`
             $('#nick_check').empty();
             $('#nick_check').append(check_html);
+        }
+    }, 1000);
+
+    setInterval(function email_check2() {
+        let email_give = $('#useremail').val();
+        let email_check = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
+
+        if (email_check.test(email_give) == true) {
+            let check_html = `<span id="email_check" style="font-size:12px; color:#1DDB16;">
+                                  O 이메일 형식에 맞춰서 이메일을 설정해주세요.
+                              </span>`
+            $('#email_check').empty();
+            $('#email_check').append(check_html);
+        } else {
+            let check_html = `<span id="email_check" style="font-size:12px;">
+                                  이메일 형식에 맞춰서 이메일을 설정해주세요.
+                              </span>`
+            $('#email_check').empty();
+            $('#email_check').append(check_html);
         }
     }, 1000);
 
@@ -281,13 +317,13 @@
         let pw_check = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d@$!%*#?&]{8,20}$/;
 
         if (pw_check.test(pw_give) == true) {
-            let check_html = `<span id="nick_check" style="font-size:12px; color:#1DDB16;">
+            let check_html = `<span id="password_check" style="font-size:12px; color:#1DDB16;">
                                   O 영문과 숫자 조합의 8-20자의 비밀번호를 설정해주세요. 특수문자(!@#$%^&*)도 사용 가능합니다.
                               </span>`
             $('#password_check').empty();
             $('#password_check').append(check_html);
         } else {
-            let check_html = `<span id="id_check" style="font-size:12px;">
+            let check_html = `<span id="password_check" style="font-size:12px;">
                                   영문과 숫자 조합의 8-20자의 비밀번호를 설정해주세요. 특수문자(!@#$%^&*)도 사용 가능합니다.
                               </span>`
             $('#password_check').empty();
@@ -302,13 +338,13 @@
         console.log(pw_give);
 
         if (pw_give == pw_re_give && pw_check.test(pw_give) == true) {
-            let check_html = `<span id="nick_check" style="font-size:12px; color:#1DDB16;">
+            let check_html = `<span id="password_re_check" style="font-size:12px; color:#1DDB16;">
                                   O 비밀번호가 일치합니다.
                               </span>`
             $('#password_re_check').empty();
             $('#password_re_check').append(check_html);
         } else {
-            let check_html = `<span id="id_check" style="font-size:12px;">
+            let check_html = `<span id="password_re_check" style="font-size:12px;">
                                   비밀번호를 다시 한 번 입력해주세요.
                               </span>`
             $('#password_re_check').empty();

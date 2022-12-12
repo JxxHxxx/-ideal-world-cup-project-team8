@@ -30,6 +30,7 @@ def api_sign():
     pw_receive = request.form['pw_give']
     pw_re_receive = request.form['pw_re_give']
     nick_receive = request.form['nick_give']
+    email_receive = request.form['email_give']
 
     reg_id = r'^[A-Za-z0-9_]{4,15}$'
 
@@ -69,13 +70,19 @@ def api_sign():
         result = 'fail_re'
         return jsonify({'result': result})
 
+    reg_email = r'^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2, 3}$'
+    if not re.search(reg_email, email_receive):
+        result = 'fail_reg'
+        return jsonify({'result': result})
+
     pw_hash = hashlib.sha256(pw_receive.encode('utf-8')).hexdigest() # 암호화??
     print("=============================")
     print(id_receive)
     print(pw_hash)
     print(nick_receive)
+    print(email_receive)
     print("=============================")
-    db.member.insert_one({'id': id_receive, 'pw': pw_hash, 'nickname': nick_receive})
+    db.member.insert_one({'id': id_receive, 'pw': pw_hash, 'nickname': nick_receive, 'email': email_receive})
 
     return jsonify({'result': 'success'})
 
