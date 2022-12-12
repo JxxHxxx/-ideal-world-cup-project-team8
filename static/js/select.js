@@ -21,7 +21,8 @@ function read_result() {
             console.log(ideal_list)
             for (let i = 0; i < ideal_list.length; i++) {
 
-                let result_html = `<tr>  
+                let result_html = `<tr>
+                                      <td>${i+1}등</td>  
                                       <td><img src="${ideal_list[i]['img']}" width=100 height=100></td>
                                       <td>${ideal_list[i]['name']}</td>
                                       <td><a href="/select/result/detail">${ideal_list[i]['win']}</a></td>     
@@ -99,6 +100,8 @@ function change(idx) {
             for (let i = 0; i < next_round_images.length; i++) {
                 candidate_images[i] = next_round_images[i]
             }
+
+            shuffle(candidate_images)
 
             if (next_round_images.length != 1) {
 
