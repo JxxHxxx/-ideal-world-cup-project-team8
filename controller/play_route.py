@@ -12,8 +12,8 @@ mySecretKey = os.environ.get('MySecretKey')
 client = MongoClient(mySecretKey)
 db = client.worldcup
 
-@routes.route('/api/noodle/read', methods=['GET'])
-def read_noddle():
+@routes.route('/api/noodle', methods=['GET'])
+def read_noodle():
     noodle_list = list(db.noodle.find({}, {"_id": False}))
     noodle_list = sorted(noodle_list, key=lambda noodle_list: noodle_list['win'], reverse=True)
 
@@ -21,7 +21,7 @@ def read_noddle():
 
 JWT_SECRET_KEY = "SPARTA"
 @routes.route('/api/nick', methods=['GET'])
-def get_cookies():
+def read_nickname():
     token = request.cookies.get("mytoken")
     try:
         payload = jwt.decode(token, JWT_SECRET_KEY, algorithms=['HS256'])
