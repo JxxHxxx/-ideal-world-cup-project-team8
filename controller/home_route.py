@@ -8,10 +8,10 @@ from . import routes
 
 from pymongo import MongoClient
 
-SECRET_KEY = 'SPARTA'
 
 load_dotenv()
 mySecretKey = os.environ.get('MySecretKey')
+SECRET_KEY = os.environ.get('SECRET_KEY')
 client = MongoClient(mySecretKey)
 db = client.worldcup
 

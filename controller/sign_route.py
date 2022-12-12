@@ -9,19 +9,16 @@ from pymongo import MongoClient
 
 from . import routes
 
-SECRET_KEY = 'SPARTA'
 
 load_dotenv()
 mySecretKey = os.environ.get('MySecretKey')
+SECRET_KEY = os.environ.get('SECRET_KEY')
 client = MongoClient(mySecretKey)
 db = client.worldcup
 
 @routes.route('/sign', methods=['GET'])
 def sign_get():
     all_members = list(db.member.find({}, {'_id': False}))
-    print("----------------")
-    print(all_members)
-    print("----------------")
     return render_template('/sign.html')
 
 @routes.route('/api/sign', methods=['POST'])

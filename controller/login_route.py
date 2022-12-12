@@ -9,10 +9,10 @@ import hashlib
 import datetime
 import jwt
 
-SECRET_KEY = 'SPARTA'
-#adadas
+
 load_dotenv()
 mySecretKey = os.environ.get('MySecretKey')
+SECRET_KEY = os.environ.get('SECRET_KEY')
 client = MongoClient(mySecretKey)
 db = client.worldcup
 
