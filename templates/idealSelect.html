@@ -25,8 +25,16 @@
     img {
           width: 800px;
           height: 450px;
-          object-fit: cover;
 
+
+    }
+    .title {
+        height: 200px;
+
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
     }
 </style>
 <script>
@@ -38,8 +46,9 @@
 </script>
 <body>
     <center>
-        <div id="noodle-title"></div>
-        <h2 id="now-round"></h2>
+        <div class="title" id="noodle-title">
+            <h2 id="now-round"></h2>
+        </div>
         <img id="first_image" onclick="change(0)" src="https://img.freepik.com/premium-photo/horizontal-blank-empty-white-background-backdrop_199726-169.jpg?w=1380">
         <img id="second_image" onclick="change(1)" src="https://img.freepik.com/premium-photo/horizontal-blank-empty-white-background-backdrop_199726-169.jpg?w=1380">
         <div id="result"></div>
