@@ -10,19 +10,6 @@ let next_round_images_index = 0;
 
 let total_matches = 0;
 
-function get_nickname() {
-    $.ajax({
-        type: 'GET',
-        url: 'api/cookies',
-        data:{},
-        success: function (response) {
-            if (response == null) {
-                alert(response['msg'])
-            }
-        }
-    })
-
-}
 
 function read_result() {
     $.ajax({
@@ -56,14 +43,33 @@ function add_noodle() {
            for (let i = 0; i < round_type[0]; i++) {
                 candidate_images[i] = ideal_list[i]['img']
            }
+           shuffle(candidate_images)
            pick()
        }
     })
 }
 
+function shuffle(array) {
+  array.sort(() => Math.random() - 0.5);
+}
+
+function show_round_info() {
+    if ((candidate_images.length) > 2) {
+        const element = document.getElementById('now-round');
+        element.innerText = candidate_images.length + "강 " +  (now_round+1) + "/" + candidate_images.length/2
+    } else {
+        const element = document.getElementById('now-round');
+        element.innerText = "결승전"
+    }
+}
+
 function pick() {
+
     document.getElementById('first_image').src=candidate_images[candidate_images_index]
     document.getElementById('second_image').src=candidate_images[candidate_images_index + 1]
+
+    show_round_info()
+
 }
 
 function change(idx) {
@@ -83,7 +89,6 @@ function change(idx) {
 
         if (now_round_total_matches >= 1) {
             candidate_images_index = candidate_images_index + 2
-
             pick()
         }
 
@@ -102,10 +107,11 @@ function change(idx) {
                 next_round_images_index = 0
                 now_round = 0
                 pick()
+
             } else {
                 document.getElementById("first_image").src = next_round_images[0]
 
-                let result_html = `<button onclick="location.href='select/result'; save_result()">결과 보기</button>`
+                let result_html = `<button class="btn btn-success" onclick="location.href='select/result'; save_result()">결과 보기</button>`
                 $('#result').append(result_html)
 
             }
@@ -123,3 +129,31 @@ function save_result() {
         }
     })
 }
+
+function get_nick() {
+    $.ajax ({
+        type:'GET',
+        url: "/api/nick",
+        data:{},
+        success : function (response) {
+
+            let temp_html = `<h1>${response}님은 어떤 라면을 좋아하시나요?</h1>`
+
+            $('#noodle-title').append(temp_html)
+        }
+    })
+}
+
+// function temp_hide() {
+//     $('img.first').click( function () {
+//             $('img.second').hide(1000, function () {
+//                 $(this).show()
+//             });
+//                })
+//
+//     $('img.second').click( function () {
+//             $('img.first').hide(1000, function () {
+//                 $(this).show()
+//             });
+//                })
+// }
