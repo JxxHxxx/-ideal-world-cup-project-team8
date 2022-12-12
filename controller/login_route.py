@@ -9,7 +9,19 @@ import hashlib
 import datetime
 import jwt
 
-#adadas
+# #Flask-Mail
+# from flask import Flask
+# from flask_mail import Mail, Message
+#
+# app = Flask(__name__)
+# mail = Mail(app)
+# print('555555555555555555555555555')
+# print(app.config)
+# print(mail)
+# print('555555555555555555555555555')
+
+
+
 load_dotenv()
 mySecretKey = os.environ.get('MySecretKey')
 SECRET_KEY = os.environ.get('SECRET_KEY')
@@ -44,7 +56,25 @@ def api_login():
         return jsonify({'result': 'fail', 'msg': '아이디/비밀번호가 일치하지 않습니다.'})
 
 
+# @routes.route('/test')
+# def test():
+#     app.config['MAIL_SERVER'] = 'smtp.gmail.com'
+#     app.config['MAIL_PORT'] = 465
+#     app.config['MAIL_USERNAME'] = 'silve45345@gmail.com'
+#     app.config['MAIL_PASSWORD'] = 'pqqx burn xcup afir'
+#     app.config['MAIL_USE_TLS'] = False
+#     app.config['MAIL_USE_SSL'] = True
+#     mail = Mail(app)
+#
+#     print('666666666666666666666')
+#     print(app.config)
+#     print(mail)
+#     print('666666666666666666666666')
+#
+#     msg = Message('Hello_world_34124123421', sender='silve45345@gmail.com', recipients=['dirn0568@naver.com'])
+#     msg.body = 'Hello Flask 메세지에용'
+#     mail.send(msg)
+#     return 'Sent'
 
-@routes.route('/test', methods=['POST'])
-def test():
-    return jsonify({'result': 'success'})
+
+

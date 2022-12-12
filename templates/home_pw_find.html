@@ -54,7 +54,7 @@
         margin: auto;
         overflow: hidden;
         width: 500px;
-        height: 450px;
+        max-height: 500px;
         background-color: #FFF;
         text-align: center;
         border: 1px solid #C2C7D0;
@@ -154,6 +154,40 @@
         z-index: 2;
         position: relative;
     }
+
+    .user_code {
+        display:none;
+    }
+    .user_code_active {
+        display:block;
+    }
+
+    .user_pw {
+        display:none;
+    }
+    .user_pw_active {
+        display:block;
+    }
+
+    .user_pw_re {
+        display:none;
+    }
+    .user_pw_re_active {
+        display:block;
+    }
+
+    .next_btn {
+        display:none;
+    }
+    .next_btn_active {
+        display:block;
+    }
+    .submit_btn {
+        display:none;
+    }
+    .submit_btn_active {
+        display:block;
+    }
 </style>
 
 <body>
@@ -168,57 +202,54 @@
             <div class="login_title">라면 월드컵</div>
             <div class="sign-in-up">
               <label class="label" for="userid" style="display:none;">ID</label>
-              <label class="label" for="userpw" style="display:none;">PW</label>
+                <label class="label" for="usercode" style="display:none;">CODE</label>
+                <label class="label" for="userpw" style="display:none;">PW</label>
+                <label class="label" for="userpw_re" style="display:none;">PW</label>
               <form class="sign-in-form active">
                   <input type="text" id="userid" placeholder="아이디">
-                  <input type="password" id="userpw" placeholder="비밀번호">
+                  <input type="text" id="usercode" class="user_code" placeholder="인증코드">
+                  <input type="text" id="userpw" class="user_pw" placeholder="비밀번호">
+                  <input type="text" id="userpw_re" class="user_pw_re" placeholder="비밀번호 재입력">
                   <div id="fail_msg"></div>
               </form>
                 <form class="sign-in-form active">
-                  <input type="button" value="로그인" style="background-color: #1f9a50; color: #FFF;" onclick="login()">
+                  <input type="button" value="다음" id="nextBtn" name="next_submit" class="next_btn_active" style="background-color: #1f9a50; color: #FFF;" onclick="next()">
                 </form>
-              <div class="divider"></div>
-              <div class="help-text"></div>
-                <form class="sign-in-form active">
-                    <input type="button" value="회원가입" style="border: 1px solid red; color: #FF0000;" onclick="sign()">
-                </form>
-                <div style="font-size:12px; text-align:right;">
-                    <span style="color:#FF0000;">비밀번호를 잊어버리셨나요?</span> &nbsp; <span style="cursor: pointer;" onclick="pw_find()">비밀번호 찾기</span>
-                </div>
             </div>
           </div>
         </div>
     </div>
 </body>
 <script>
-
-    function login() {
+    function next() {
         $.ajax({
             type: "POST",
-            url: "/api/login",
-            data: {id_give: $('#userid').val(), pw_give: $('#userpw').val()},
+            url: "/api/pw_find",
+            data: {id_give: $('#userid').val(), code_give: $('#usercode').val(), pw_give: $('#userpw').val(), pw_re_give: $('#userpw_re').val()},
             success: function (response) {
-                if (response['result'] == 'success') {
-                    $.cookie('mytoken', response['token']);
-
-                    window.location.href='/accept';
+                if (response['result'] == 'success' && document.getElementById('usercode').classList == 'user_code') {
+                    document.getElementById('usercode').className += '_active';
+                } else if (response['result'] == 'success' && document.getElementById('userpw').classList == 'user_pw'){
+                    document.getElementById('userpw').className += '_active';
+                } else if (response['result'] == 'success' && document.getElementById('userpw_re').classList == 'user_pw_re'){
+                    document.getElementById('userpw_re').className += '_active';
+                    $('input[name=next_submit]').attr('value','제출');
+                } else if (document.getElementById('userpw_re').classList == 'user_pw_re_active'){
+                    if (response['result'] == 'success') {
+                        alert("비밀번호 변경 성공!");
+                        window.location.href='/';
+                    } else {
+                        alert("비밀번호 변경실패");
+                    }
                 } else {
-                    $('#fail_msg').empty();
-                    let fail_login = `<span style="color:#FF0000; font-size:12px;">
-                                        아이디 또는 비밀번호가 정확하지 않습니다.
-                                      </span>`
-                    $('#fail_msg').append(fail_login);
+                    alert("실패");
                 }
             }
         })
     }
 
-    function sign() {
-        window.location.href='/sign';
-    }
-
     function pw_find() {
-        window.location.href='/pw_find';
+        alert("메일을 보내고있습니다.");
     }
 </script>
 </html>
