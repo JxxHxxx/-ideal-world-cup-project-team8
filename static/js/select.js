@@ -116,7 +116,7 @@ function change(idx) {
 
             } else {
                 document.getElementById("first_image").src = next_round_images[0]
-
+                document.getElementById("second_image").style.display ='none';
                 let result_html = `<button class="btn btn-success" onclick="location.href='select/result'; save_result()">결과 보기</button>`
                 $('#result').append(result_html)
 
@@ -145,7 +145,7 @@ function get_nick() {
 
             let temp_html = `<h1>${response}님은 어떤 라면을 좋아하시나요?</h1>`
 
-            $('#noodle-title').append(temp_html)
+            $('#noodle-title').prepend(temp_html)
         }
     })
 }
