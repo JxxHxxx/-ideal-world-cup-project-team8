@@ -60,7 +60,7 @@ def result():
     except jwt.exceptions.DecodeError:
         return redirect(url_for("routes.home", msg="로그인 정보가 존재하지 않습니다."))
 
-@routes.route('/select', methods=['GET'])
+@routes.route('/play', methods=['GET'])
 def select():
     token = request.cookies.get('mytoken')
     try:
@@ -87,6 +87,4 @@ def detail(noodle_name):
 
     except jwt.exceptions.DecodeError:
         return redirect(url_for("routes.home", msg="로그인 정보가 존재하지 않습니다."))
-
-
 
