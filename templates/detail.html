@@ -28,7 +28,7 @@
         table {
           border-collapse: separate;
           border-spacing: 0;
-          width: 50%;
+          width: 200%;
           height: 50%;
           text-align:center;
 
@@ -71,6 +71,16 @@
           justyfy-content: center;
           align-self: center
         }
+        .ranking_list {
+            position: absolute;
+            top: 50%;
+            left: 45%;
+            transform: translate( -50%, -50% );
+        }
+        .btn {
+            float: left;
+        }
+
 </style>
 <script>
     $(document).ready(function () {
@@ -89,7 +99,7 @@
             <table  height="300" >
             <thead>
                 <tr>
-                    <td>투표자</td>
+                    <td>{{ noodle_name }}(를)을 좋아하는 항해원</td>
                 </tr>
             </thead>
             <tbody>
@@ -102,7 +112,7 @@
             {% endfor %}
                 <tr>
                     <td>
-                        <span onclick="location.href='/play/result'">뒤로가기</span>
+                        <span onclick="location.href='/play/results'">뒤로가기</span>
                         <span>&nbsp;&nbsp;&nbsp;&nbsp</span>
                         <span onclick="location.href='/accept'">다시하기</span>
                     </td>
