@@ -1,3 +1,4 @@
+import hashlib
 import os
 
 import jwt
@@ -8,26 +9,34 @@ from . import routes
 
 from pymongo import MongoClient
 
-SECRET_KEY = 'SPARTA'
-
 load_dotenv()
 mySecretKey = os.environ.get('MySecretKey')
+SECRET_KEY = os.environ.get('SECRET_KEY')
 client = MongoClient(mySecretKey)
 db = client.worldcup
 
 @routes.route('/')
 def home():
-    return render_template('home_login.html')
+    token_receive = request.cookies.get('mytoken')
+    try:
+        payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
+        user_info = db.member.find_one({'id': payload['id'], "pw": payload['pw']})
+        if user_info != None:
+            return redirect(url_for('routes.home_accept'))
+    except:
+        return render_template('home_login.html')
 
 @routes.route('/accept')
 def home_accept():
     token_receive = request.cookies.get('mytoken')
     try:
         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
-        user_info = db.member.find_one({"id": payload['id']})
+        user_info = db.member.find_one({'id': payload['id'], "pw": payload['pw']})
+        if user_info == None:
+            return redirect(url_for('routes.home'))
         return render_template('home.html', nickname=user_info["nickname"])
     except:
-        return render_template('home.html')
+        return redirect(url_for('routes.home'))
 
 
 

@@ -44,11 +44,16 @@
         text-align:center;
     }
 
+    .logout_btn {
+        position: absolute;
+        top: 0%;
+        left: 95%;
+    }
 
 </style>
 
 
-<body>
+<body onbeforeunload="return myFunction()">
     <div class="backImage"></div>
 
     <div id="login"></div>
@@ -74,19 +79,19 @@
                                         &nbsp;&nbsp;PLAY&nbsp;&nbsp;
                                     </button><br>
                                 </a>
-                                <button style="background:#FF0000; color:#FFFFFF;" onclick="logout()">&nbsp;&nbsp;로그아웃&nbsp;&nbsp;</button>
-                              </div>`
+                              </div>
+                              <button class="logout_btn" style="background:#FF0000; color:#FFFFFF;" onclick="logout()">&nbsp;&nbsp;로그아웃&nbsp;&nbsp;</button>`
 
             $('#login').append(login_html);
         } else {
             alert('로그인되어있지않습니다.');
+            window.location.href='/';
         }
         console.log(typeof(cookie));
       }
 
       function logout(){
             $.removeCookie('mytoken');
-            alert('로그아웃!');
             window.location.href='/';
       }
 </script>
