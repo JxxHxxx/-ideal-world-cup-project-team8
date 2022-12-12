@@ -1,0 +1,6 @@
+/venv/
+
+.env
+/.idea/vcs.xml
+
+*pyc
