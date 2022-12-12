@@ -14,7 +14,7 @@ let total_matches = 0;
 function read_result() {
     $.ajax({
         type: 'GET',
-        url: '/api/noodle/read',
+        url: '/api/noodle',
         data:{},
         success: function (response) {
             ideal_list = response['ideal']
@@ -39,7 +39,7 @@ function read_result() {
 function add_noodle() {
     $.ajax({
        type: 'GET',
-       url: '/api/noodle/read',
+       url: '/api/noodle',
        data: {},
        success: function (response) {
            ideal_list = response['ideal']
