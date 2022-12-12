@@ -46,7 +46,7 @@
         margin: auto;
         overflow: hidden;
         width: 600px;
-        height: 600px;
+        height: 700px;
         background-color: #FFF;
         text-align: center;
         border: 1px solid #C2C7D0;
@@ -295,7 +295,7 @@
 
     setInterval(function email_check2() {
         let email_give = $('#useremail').val();
-        let email_check = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
+        let email_check = /^[A-Za-z]+[A-Za-z0-9]+@[A-Za-z]+\.[A-Za-z]+$/;
 
         if (email_check.test(email_give) == true) {
             let check_html = `<span id="email_check" style="font-size:12px; color:#1DDB16;">
@@ -318,13 +318,13 @@
 
         if (pw_check.test(pw_give) == true) {
             let check_html = `<span id="password_check" style="font-size:12px; color:#1DDB16;">
-                                  O 영문과 숫자 조합의 8-20자의 비밀번호를 설정해주세요. 특수문자(!@#$%^&*)도 사용 가능합니다.
+                                  O 영문과 숫자 조합의 8-20자의 비밀번호를 설정해주세요. 특수문자(!@#$%&*)도 사용 가능합니다.
                               </span>`
             $('#password_check').empty();
             $('#password_check').append(check_html);
         } else {
             let check_html = `<span id="password_check" style="font-size:12px;">
-                                  영문과 숫자 조합의 8-20자의 비밀번호를 설정해주세요. 특수문자(!@#$%^&*)도 사용 가능합니다.
+                                  영문과 숫자 조합의 8-20자의 비밀번호를 설정해주세요. 특수문자(!@#$%&*)도 사용 가능합니다.
                               </span>`
             $('#password_check').empty();
             $('#password_check').append(check_html);

@@ -70,18 +70,15 @@ def api_sign():
         result = 'fail_re'
         return jsonify({'result': result})
 
-    reg_email = r'^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2, 3}$'
+    reg_email = r'^[A-Za-z]+[A-Za-z0-9]+@[A-Za-z]+\.[A-Za-z]+$'
+    #r'^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2, 3}$'
+    print("email_recc :", email_receive)
     if not re.search(reg_email, email_receive):
+        print("이메일 정규식 실패?>??????????????")
         result = 'fail_reg'
         return jsonify({'result': result})
 
     pw_hash = hashlib.sha256(pw_receive.encode('utf-8')).hexdigest() # 암호화??
-    print("=============================")
-    print(id_receive)
-    print(pw_hash)
-    print(nick_receive)
-    print(email_receive)
-    print("=============================")
     db.member.insert_one({'id': id_receive, 'pw': pw_hash, 'nickname': nick_receive, 'email': email_receive})
 
     return jsonify({'result': 'success'})
@@ -107,7 +104,6 @@ def api_id_check():
 @routes.route('/api/nick_check', methods=['POST'])
 def api_nick_check():
     nick_receive = request.form['nick_give']
-    print(nick_receive)
 
     nick_data = nick_receive
     reg = r'^[A-Za-zㄱ-ㅣ가-힣0-9]{2,10}$'
@@ -117,7 +113,6 @@ def api_nick_check():
         return jsonify({'result': result})
 
     member_check = db.member.find_one({'nickname': nick_receive})
-    print(member_check)
 
     if member_check == None:
         result = 'success'
