@@ -14,6 +14,7 @@ import random
 load_dotenv()
 mySecretKey = os.environ.get('MySecretKey')
 SECRET_KEY = os.environ.get('SECRET_KEY')
+SECRET_PASSWORD = os.environ.get('SECRET_PASSWORD')
 client = MongoClient(mySecretKey)
 db = client.worldcup
 
@@ -31,7 +32,7 @@ mail = Mail(app)
 app.config['MAIL_SERVER'] = 'smtp.gmail.com'
 app.config['MAIL_PORT'] = 465
 app.config['MAIL_USERNAME'] = 'silve45345@gmail.com'
-app.config['MAIL_PASSWORD'] = 'pqqx burn xcup afir'
+app.config['MAIL_PASSWORD'] = SECRET_PASSWORD
 app.config['MAIL_USE_TLS'] = False
 app.config['MAIL_USE_SSL'] = True
 mail = Mail(app)
