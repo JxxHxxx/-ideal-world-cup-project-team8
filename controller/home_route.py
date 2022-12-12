@@ -3,7 +3,7 @@ import os
 import jwt
 from dotenv import load_dotenv
 
-from flask import render_template, request, redirect, url_for, jsonify
+from flask import render_template, request
 from . import routes
 
 from pymongo import MongoClient
