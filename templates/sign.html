@@ -3,12 +3,322 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+
+     <!-- bootstrap4 -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+
+    <!-- jquery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <!-- cookie -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
 </head>
+
+<style>
+    * {
+        margin:0;
+        padding:0;
+        font-family: 'TmoneyRoundWindExtraBold';
+    }
+
+    @font-face {
+        font-family: 'TmoneyRoundWindExtraBold';
+        src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-07@1.0/TmoneyRoundWindExtraBold.woff') format('woff');
+        font-weight: normal;
+        font-style: normal;
+    }
+
+    .backImage {
+        width:100vw;
+        height:100vh;
+        background-image:url('../static/src/라면배경.gif');
+        background-size:cover;
+    }
+
+    .not_login_textMain {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate( -50%, -50% );
+    }
+
+    .inner-cont {
+        margin: auto;
+        overflow: hidden;
+        width: 600px;
+        height: 600px;
+        background-color: #FFF;
+        text-align: center;
+        border: 1px solid #C2C7D0;
+        border-radius: 20px;
+    }
+    .inner-cont .sign {
+        overflow: hidden;
+    }
+    .login_title {
+        color:#FF0000;
+        font-size:50px;
+    }
+    .inner-cont .sign span {
+        float: left;
+        width: 100%;
+        display: block;
+        padding: 8px 0;
+        font-size: 22px;
+        font-weight: bold;
+        cursor: pointer;
+        background-color: #EEE;
+        color: #919191;
+    }
+    .inner-cont .sign span.active {
+        border-top: 2px solid #1f9a50;
+        background-color: #FFF;
+    }
+    .inner-cont .sign-in-up {
+        padding: 25px;
+    }
+    .inner-cont .sign-in-up form input:not([type="button"],[type="password"]) {
+        width: 75%;
+        padding: 10px;
+        margin-bottom: 10px;
+        border: 1px solid #C2C7D0;
+        border-radius: 5px;
+        box-sizing: border-box
+    }
+    .inner-cont .sign-in-up form input[type="button"]{
+        width: 20%;
+        padding: 10px;
+        margin-bottom: 10px;
+        border: 1px solid #C2C7D0;
+        border-radius: 5px;
+        box-sizing: border-box;
+        cursor: pointer;
+    }
+    .inner-cont .sign-in-up form input[type="password"]{
+        width: 95%;
+        padding: 10px;
+        margin-bottom: 10px;
+        border: 1px solid #C2C7D0;
+        border-radius: 5px;
+        box-sizing: border-box
+    }
+
+    .inner-cont .sign-in-up2 {
+        padding: 15px;
+    }
+    .inner-cont .sign-in-up2 form input[type="button"] {
+        width: 45%;
+        padding: 10px;
+        margin-bottom: 10px;
+        border: 1px solid #C2C7D0;
+        border-radius: 5px;
+        box-sizing: border-box;
+        cursor: pointer;
+    }
+
+</style>
+
 <body>
-  회원가입 페이지입니다.
+    <div class="backImage"></div>
+
+    <div class="not_login_textMain">
+        <div class="global-cont">
+              <div class="inner-cont">
+                <div class="sign">
+                    <span class="active sign-in"></span>
+                </div>
+                <div class="login_title">라면 월드컵</div>
+                <div class="sign-in-up">
+                  <label class="label" for="userid" style="display:none;">ID</label>
+                  <label class="label" for="usernick" style="display:none;">닉네임</label>
+                  <label class="label" for="userpw" style="display:none;">PW</label>
+                  <label class="label" for="userpw_re" style="display:none;">PW_re</label>
+                  <form class="sign-in-form active">
+                      <input type="text" id="userid" placeholder="아이디">
+                      <input type="button" value="중복확인" onclick="id_check()">
+                      <br>
+                      <span id="id_check" style="font-size:12px;">
+                          아이디는 4-15자의 영문과 숫자와 일부 특수문자(_)만 입력 가능합니다.
+                      </span>
+
+                      <p></p>
+                      <input type="text" id="usernick" placeholder="닉네임">
+                      <input type="button" value="중복확인" onclick="nick_check()">
+                      <br>
+                      <span id="nick_check" style="font-size:12px;">
+                          닉네임은 2-10자의 한글과 영문과 숫자만 입력 가능합니다.
+                      </span>
+
+                      <p></p>
+                      <input type="password" id="userpw" placeholder="비밀번호">
+                      <br>
+                      <span id="password_check" style="font-size:12px;">
+                          영문과 숫자 조합의 8-20자의 비밀번호를 설정해주세요. 특수문자(!@#$%^&*)도 사용 가능합니다.
+                      </span>
+
+                      <p></p>
+                      <input type="password" id="userpw_re" placeholder="비밀번호 재입력">
+                      <br>
+                      <span id="password_re_check" style="font-size:12px;">
+                          비밀번호를 다시 한 번 입력해주세요.
+                      </span>
+                  </form>
+                </div>
+              <div class="sign-in-up2">
+                <form class="sign-in-form active">
+                    <input type="button" value="회원가입" style="background-color: #1f9a50; color: #FFF;" onclick="sign()">
+                    <input type="button" value="취소" style="border: 1px solid red; color: #FF0000;" onclick="cancel()">
+                </form>
+              </div>
+          </div>
+        </div>
+    </div>
 </body>
+<script>
+    function sign() {
+        $.ajax({
+            type: "POST",
+            url: "/api/sign",
+            data: {
+                id_give: $('#userid').val(),
+                pw_give: $('#userpw').val(),
+                pw_re_give: $('#userpw_re').val(),
+                nick_give: $('#usernick').val()
+            },
+            success: function (response) {
+                if (response['result'] == 'fail_reg') {
+                    alert('회원가입에 실패하셨습니다.')
+                } else if (response['result'] == 'fail_re') {
+                    alert('회원가입에 실패하셨습니다.')
+                } else {
+                    alert('회원가입이 정상적으로 처리되었습니다')
+                }
+                window.location.href = '/'
+            }
+        })
+    }
+
+    function id_check() {
+        console.log("아이디첵");
+        $.ajax({
+            type: "POST",
+            url: "/api/id_check",
+            data: {
+                id_give: $('#userid').val(),
+            },
+            success: function (response) {
+                if (response['result'] == 'fail_reg') {
+                    alert('조건에 맞는 아이디가 아닙니다')
+                } else if (response['result'] == 'fail_re') {
+                    alert('같은 아이디가 이미 있습니다')
+                } else {
+                    alert('사용가능한 아이디입니다')
+                }
+            }
+        })
+    }
+
+    function nick_check() {
+        console.log("닉네임첵");
+        $.ajax({
+            type: "POST",
+            url: "/api/nick_check",
+            data: {
+                nick_give: $('#usernick').val(),
+            },
+            success: function (response) {
+                if (response['result'] == 'fail_reg') {
+                    alert('조건에 맞는 닉네임이 아닙니다')
+                } else if (response['result'] == 'fail_re') {
+                    alert('같은 닉네임이 이미 있습니다')
+                } else {
+                    alert('사용가능한 닉네임입니다')
+                }
+            }
+        })
+    }
+
+    setInterval(function id_check2() {
+        let id_give = $('#userid').val();
+        let id_check = /^[A-Za-z0-9_]{4,15}$/;
+
+        if (id_check.test(id_give) == true) {
+            let check_html = `<span id="id_check" style="font-size:12px; color:#1DDB16;">
+                                  O 아이디는 4-15자의 영문과 숫자와 일부 특수문자(_)만 입력 가능합니다.
+                              </span>`
+            $('#id_check').empty();
+            $('#id_check').append(check_html);
+        } else {
+            let check_html = `<span id="id_check" style="font-size:12px;">
+                                  아이디는 4-15자의 영문과 숫자와 일부 특수문자(_)만 입력 가능합니다.
+                              </span>`
+            $('#id_check').empty();
+            $('#id_check').append(check_html);
+        }
+    }, 1000);
+
+    setInterval(function nick_check2() {
+        let nick_give = $('#usernick').val();
+        let nick_check = /^[A-Za-zㄱ-ㅣ가-힣0-9]{2,10}$/;
+
+        if (nick_check.test(nick_give) == true) {
+            let check_html = `<span id="nick_check" style="font-size:12px; color:#1DDB16;">
+                                  O 닉네임은 2-10자의 한글과 영문과 숫자만 입력 가능합니다.
+                              </span>`
+            $('#nick_check').empty();
+            $('#nick_check').append(check_html);
+        } else {
+            let check_html = `<span id="id_check" style="font-size:12px;">
+                                  닉네임은 2-10자의 한글과 영문과 숫자만 입력 가능합니다.
+                              </span>`
+            $('#nick_check').empty();
+            $('#nick_check').append(check_html);
+        }
+    }, 1000);
+
+    setInterval(function pw_check2() {
+        let pw_give = $('#userpw').val();
+        let pw_check = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d@$!%*#?&]{8,20}$/;
+
+        if (pw_check.test(pw_give) == true) {
+            let check_html = `<span id="nick_check" style="font-size:12px; color:#1DDB16;">
+                                  O 영문과 숫자 조합의 8-20자의 비밀번호를 설정해주세요. 특수문자(!@#$%^&*)도 사용 가능합니다.
+                              </span>`
+            $('#password_check').empty();
+            $('#password_check').append(check_html);
+        } else {
+            let check_html = `<span id="id_check" style="font-size:12px;">
+                                  영문과 숫자 조합의 8-20자의 비밀번호를 설정해주세요. 특수문자(!@#$%^&*)도 사용 가능합니다.
+                              </span>`
+            $('#password_check').empty();
+            $('#password_check').append(check_html);
+        }
+    }, 1000);
+
+    setInterval(function pw_re_check2() {
+        let pw_give = $('#userpw').val();
+        let pw_re_give = $('#userpw_re').val();
+        let pw_check = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d@$!%*#?&]{8,20}$/;
+        console.log(pw_give);
+
+        if (pw_give == pw_re_give && pw_check.test(pw_give) == true) {
+            let check_html = `<span id="nick_check" style="font-size:12px; color:#1DDB16;">
+                                  O 비밀번호가 일치합니다.
+                              </span>`
+            $('#password_re_check').empty();
+            $('#password_re_check').append(check_html);
+        } else {
+            let check_html = `<span id="id_check" style="font-size:12px;">
+                                  비밀번호를 다시 한 번 입력해주세요.
+                              </span>`
+            $('#password_re_check').empty();
+            $('#password_re_check').append(check_html);
+        }
+    }, 1000);
+
+    function cancel() {
+        window.location.href = '/'
+    }
+
+</script>
 </html>
-
-
-
-" 반가워요 "

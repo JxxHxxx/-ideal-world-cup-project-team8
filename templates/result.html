@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<style>
+    * {
+            margin:0;
+            padding:0;
+            font-family: 'TmoneyRoundWindExtraBold';
+        }
+
+@font-face {
+            font-family: 'TmoneyRoundWindExtraBold';
+            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-07@1.0/TmoneyRoundWindExtraBold.woff') format('woff');
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        table {
+          border-collapse: separate;
+          border-spacing: 0;
+          width: 100%;
+        }
+        th,
+        td {
+          padding: 6px 15px;
+        }
+        th {
+          background: #42444e;
+          color: #fff;
+          text-align: left;
+        }
+        tr:first-child th:first-child {
+          border-top-left-radius: 6px;
+        }
+        tr:first-child th:last-child {
+          border-top-right-radius: 6px;
+        }
+        td {
+          border-right: 1px solid #c6c9cc;
+          border-bottom: 1px solid #c6c9cc;
+        }
+        td:first-child {
+          border-left: 1px solid #c6c9cc;
+        }
+        tr:nth-child(even) td {
+          background: #eaeaed;
+        }
+        tr:last-child td:first-child {
+          border-bottom-left-radius: 6px;
+        }
+        tr:last-child td:last-child {
+          border-bottom-right-radius: 6px;
+        }
+</style>
+<script>
+    $(document).ready(function () {
+        read_result();
+    });
+</script>
+<body>
+    <div class="profile_list">
+        <table width="650" height="300" align="center">
+            <thead>
+                <tr>
+                    <td>순위</td>
+                    <td>라면</td>
+                    <td>이름</td>
+                    <td>우승 횟수</td>
+                </tr>
+            </thead>
+            <tbody id="result-box">
+            </tbody>
+        </table>
+    </div>
+
+</body>
+<script type="text/javascript" src="../static/js/select.js"></script>
+</html>

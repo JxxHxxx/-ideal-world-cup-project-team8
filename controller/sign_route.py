@@ -1,12 +1,4 @@
-import hashlib
-import os
-import re
-
-from dotenv import load_dotenv
-
-from flask import render_template, request, jsonify
-from pymongo import MongoClient
-
+from flask import render_template
 from . import routes
 
 SECRET_KEY = 'SPARTA'
@@ -15,6 +7,10 @@ load_dotenv()
 mySecretKey = os.environ.get('MySecretKey')
 client = MongoClient(mySecretKey)
 db = client.worldcup
+
+@routes.route('/sign', methods=['GET'])
+def sign_get():
+    return render_template('/sign_register.html')
 
 @routes.route('/sign', methods=['GET'])
 def sign_get():
@@ -32,7 +28,7 @@ def api_sign():
     nick_receive = request.form['nick_give']
 
     if not pw_receive == pw_re_receive:
-        result = 'fail_re'
+        result = 'fail_reg'
         return jsonify({'result': result})
 
     reg = r'^[A-Za-z\d!@#$%^&*?]{8,20}$'
@@ -64,7 +60,7 @@ def api_id_check():
     if member_check == None:
         result = 'success'
     else:
-        result = 'fail_re'
+        result = 'fail_reg'
     return jsonify({'result': result})
 
 @routes.route('/api/nick_check', methods=['POST'])
@@ -84,5 +80,6 @@ def api_nick_check():
     if member_check == None:
         result = 'success'
     else:
-        result = 'fail_re'
+        result = 'fail_reg'
     return jsonify({'result': result})
+

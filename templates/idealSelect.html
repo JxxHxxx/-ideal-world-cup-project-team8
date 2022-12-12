@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>이상형 월드컵 페이지</title>
+
+     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<style>
+    * {
+        margin:0;
+        padding:0;
+        font-family: 'TmoneyRoundWindExtraBold';
+    }
+
+    @font-face {
+        font-family: 'TmoneyRoundWindExtraBold';
+        src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-07@1.0/TmoneyRoundWindExtraBold.woff') format('woff');
+        font-weight: normal;
+        font-style: normal;
+    }
+
+    img {
+          width: 800px;
+          height: 450px;
+          object-fit: cover;
+
+    }
+</style>
+<script>
+
+    $(document).ready(function () {
+        add_noodle()
+        get_nick()
+    });
+</script>
+<body>
+    <center>
+        <div id="noodle-title"></div>
+        <h2 id="now-round"></h2>
+        <img id="first_image" onclick="change(0)" src="https://img.freepik.com/premium-photo/horizontal-blank-empty-white-background-backdrop_199726-169.jpg?w=1380">
+        <img id="second_image" onclick="change(1)" src="https://img.freepik.com/premium-photo/horizontal-blank-empty-white-background-backdrop_199726-169.jpg?w=1380">
+        <div id="result"></div>
+    </center>
+    </div>
+</body>
+<script type="text/javascript" src="../static/js/select.js"></script>
+<script type="text/javascript" src="../static/js/select_config.js"></script>
+
+</html>
