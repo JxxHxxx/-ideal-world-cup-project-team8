@@ -43,16 +43,15 @@
         transform: translate( -50%, -50% );
         text-align:center;
     }
-
-    .not_login_textMain {
+    .logout_btn {
         position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate( -50%, -50% );
+        top: 0%;
+        left: 95%;
     }
 
 
 </style>
+
 
 <body>
     <div class="backImage"></div>
@@ -80,7 +79,7 @@
                                         &nbsp;&nbsp;PLAY&nbsp;&nbsp;
                                     </button><br>
                                 </a>
-                                <button style="background:#FF0000; color:#FFFFFF;" onclick="logout()">&nbsp;&nbsp;로그아웃&nbsp;&nbsp;</button>
+                                <button class="logout_btn" style="background:#FF0000; color:#FFFFFF;" onclick="logout()">&nbsp;&nbsp;로그아웃&nbsp;&nbsp;</button>
                               </div>`
 
             $('#login').append(login_html);
@@ -88,7 +87,6 @@
             alert('로그인되어있지않습니다.');
         }
         console.log(typeof(cookie));
-
       }
 
       function logout(){
@@ -98,9 +96,4 @@
       }
 </script>
 
-<body>
-    <div class="backImage"></div>
-
-    <div id="login"></div>
-</body>
 </html>
