@@ -20,12 +20,15 @@ function read_result() {
             ideal_list = response['ideal']
             console.log(ideal_list)
             for (let i = 0; i < ideal_list.length; i++) {
+                let noodle_name = ideal_list[i]['name']
+                let noodle_img = ideal_list[i]['img']
+                let noodle_win =ideal_list[i]['win']
 
                 let result_html = `<tr>
                                       <td>${i+1}등</td>  
-                                      <td><img src="${ideal_list[i]['img']}" width=100 height=100></td>
-                                      <td>${ideal_list[i]['name']}</td>
-                                      <td><a href="/select/result/detail">${ideal_list[i]['win']}</a></td>     
+                                      <td><img src="${noodle_img}" width=100 height=100></td>
+                                      <td>${noodle_name}</td> 
+                                      <td><a onclick="location.href='/select/detail/${noodle_name}'")" >${noodle_win}</a></td>     
                                     </tr>`
                 $('#result-box').append(result_html)
             }
