@@ -16,7 +16,6 @@ db = client.worldcup
 def select():
     return render_template('idealSelect.html')
 
-
 @routes.route('/api/noodle/read', methods=['GET'])
 def read_noddle():
     noodle_list = list(db.noodle.find({}, {"_id": False}))
@@ -24,16 +23,15 @@ def read_noddle():
 
     return jsonify({'ideal': noodle_list})
 
-
 JWT_SECRET_KEY = "SPARTA"
-@routes.route('/api/cookies', methods=['GET'])
+@routes.route('/api/nick', methods=['GET'])
 def get_cookies():
     token = request.cookies.get("mytoken")
     try:
         payload = jwt.decode(token, JWT_SECRET_KEY, algorithms=['HS256'])
         login_member = db.member.find_one({'id': payload['id']})
-        print(login_member)
-        return render_template('idealSelect.html', nickname=login_member["nickname"])
+
+        return login_member['nickname']
 
     except jwt.ExpiredSignatureError:
         return redirect(url_for("routes.get_cookies", msg="로그인 시간이 만료되었습니다."))
