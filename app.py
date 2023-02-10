@@ -71,9 +71,9 @@ def api_pw_find():
             msg = Message('비밀번호 코드', sender='silve45345@gmail.com', recipients=[email_receive])
             msg.body = '인증코드 : {0}'.format(code)
             mail.send(msg)
-            return jsonify({'result': 'success'})
+            return jsonify({'result': 'success1'})
         else:
-            return jsonify({'result': 'fail'})
+            return jsonify({'result': 'fail1'})
     elif id_receive != "" and code_receive != "" and pw_receive == "" and pw_re_receive == "":
         result = db.member.find_one({'id': id_receive})
         print("3 :", result)
@@ -83,34 +83,39 @@ def api_pw_find():
         print(type(result['code']))
         if result is not None:
             if int(code_receive) == result['code']:
-                return jsonify({'result': 'success'})
+                return jsonify({'result': 'success2'})
             else:
-                return jsonify({'result': 'fail'})
+                return jsonify({'result': 'fail2'})
         else:
-            return jsonify({'result': 'fail'})
+            return jsonify({'result': 'fail2'})
     elif id_receive != "" and code_receive != "" and pw_receive != "" and pw_re_receive == "":
         result = db.member.find_one({'id': id_receive})
 
         reg_pw = r'^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d@$!%*#?&]{8,20}$'
 
         if not re.search(reg_pw, pw_receive):
-            result = 'fail'
+            result = 'fail3'
             return jsonify({'result': result})
-        return jsonify({'result': 'success'})
+        return jsonify({'result': 'success3'})
     elif id_receive != "" and code_receive != "" and pw_receive != "" and pw_re_receive != "":
         print("4단계 실행중>>>>")
+        print(id_receive)
+        print(code_receive)
+        print(pw_receive)
+        print(pw_re_receive)
+        print("4단계 실행중>>>>")
         result = db.member.find_one({'id': id_receive})
-        print("4 result:", result)
+        print("result:", result)
         reg_pw = r'^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d@$!%*#?&]{8,20}$'
 
         if not re.search(reg_pw, pw_re_receive):
             print("정규식 실행중????")
-            result = 'fail'
+            result = 'fail4'
             return jsonify({'result': result})
 
         if pw_receive != pw_re_receive:
-            print("일치여부 실행중????")
-            result = 'fail'
+            print("일치하지않음")
+            result = 'fail4'
             return jsonify({'result': result})
 
         pw_hash = hashlib.sha256(pw_receive.encode('utf-8')).hexdigest()  # 암호화??
@@ -120,7 +125,7 @@ def api_pw_find():
     # msg = Message('비밀번호 코드', sender='silve45345@gmail.com', recipients=[id_receive])
     # msg.body = '인증코드 : {0}'.format(code)
     # mail.send(msg)
-    return jsonify({'result': 'success'})
+    return jsonify({'result': 'success4'})
 
 if __name__ == '__main__':
     app.run('0.0.0.0', port=5000, debug=True)

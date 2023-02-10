@@ -227,15 +227,15 @@
             url: "/api/pw_find",
             data: {id_give: $('#userid').val(), code_give: $('#usercode').val(), pw_give: $('#userpw').val(), pw_re_give: $('#userpw_re').val()},
             success: function (response) {
-                if (response['result'] == 'success' && document.getElementById('usercode').classList == 'user_code') {
+                if (response['result'] == 'success1' && document.getElementById('usercode').classList == 'user_code') {
                     document.getElementById('usercode').className += '_active';
-                } else if (response['result'] == 'success' && document.getElementById('userpw').classList == 'user_pw'){
+                } else if (response['result'] == 'success2' && document.getElementById('userpw').classList == 'user_pw'){
                     document.getElementById('userpw').className += '_active';
-                } else if (response['result'] == 'success' && document.getElementById('userpw_re').classList == 'user_pw_re'){
+                } else if (response['result'] == 'success3' && document.getElementById('userpw_re').classList == 'user_pw_re'){
                     document.getElementById('userpw_re').className += '_active';
                     $('input[name=next_submit]').attr('value','제출');
                 } else if (document.getElementById('userpw_re').classList == 'user_pw_re_active'){
-                    if (response['result'] == 'success') {
+                    if (response['result'] == 'success4') {
                         alert("비밀번호 변경 성공!");
                         window.location.href='/';
                     } else {
